@@ -74,7 +74,8 @@
                             return item === currentEvent || (item && item.name === currentEvent);
                         });
 
-                        filteredHandlers.forEach(function(handler){
+                        filteredHandlers.forEach(function(handlerName){
+                            var handler = self.$listeners[handlerName]
                             var handlerType = typeof(handler);
                             if(handlerType === 'undefined'){
                                 Utils.logger.log('no user-defined ' + itemType + ' event handler for event: ' + currentEvent);
@@ -90,6 +91,14 @@
                                 handlers.push({
                                     name: currentEvent,
                                     transform: handler.transform,
+                                    delay: handler.delay || 0,
+                                    once: handler.once || false
+                                });
+                            } else if(handlerType === 'function'){
+                                console.log('setting up function handler for ' + itemType + ' event: ' + handler);
+                                handlers.push({
+                                    name: currentEvent,
+                                    transform: handler,
                                     delay: handler.delay || 0,
                                     once: handler.once || false
                                 });
