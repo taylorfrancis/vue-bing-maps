@@ -148,6 +148,7 @@
         mounted(){
             Utils.logger.log('mounted lifecycle hook, rendering push-pin' + this._uid + '...');
             this.render();
+	    this.registerEvents();
         },
         beforeUpdate(){
             Utils.logger.log('beforeUpdate lifecycle hook, pin ' + this._uid);
